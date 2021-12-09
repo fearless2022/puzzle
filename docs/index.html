@@ -1,320 +1,324 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link type="image/x-icon" href="images/2.png" rel="icon">
-<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
-<title>欢乐拼图</title>
-<style type="text/css">
-body {
-	margin: 0px;
-	padding: 0px;
-	font-family: 微软雅黑;
-	background: url("images/3.png");
-}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link type="image/x-icon" href="images/2.png" rel="icon">
+    <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+    <title>欢乐拼图</title>
+    <style type="text/css">
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: 微软雅黑;
+            background: url("images/3.png");
+        }
 
-#mainTab {
-	position: absolute;
-	display: none;
-	background: #fff;
-	box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.4);
-}
+        #mainTab {
+            position: absolute;
+            display: none;
+            background: #fff;
+            box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.4);
+        }
 
-#title {
-	position: absolute;
-	z-index: 100;
-	width: 100%;
-	text-align: center;
-	top: 38%;
-	font-size: 70px;
-	font-weight: bold;
-	text-shadow: 0 8px 9px #37879B, 0px -2px 2px #77B2D3;
-	color: #fff;
-}
+        #title {
+            position: absolute;
+            z-index: 100;
+            width: 100%;
+            text-align: center;
+            top: 38%;
+            font-size: 70px;
+            font-weight: bold;
+            text-shadow: 0 8px 9px #37879B, 0px -2px 2px #77B2D3;
+            color: #fff;
+        }
 
-#size {
-	display: none;
-}
+        #size {
+            display: none;
+        }
 
-.img {
-	border: 1px solid #F0F0F0;
-	position: absolute;
-	display: none;
-	cursor: pointer;
-}
+        .img {
+            border: 1px solid #F0F0F0;
+            position: absolute;
+            display: none;
+            cursor: pointer;
+        }
 
-#menu {
-	position: absolute;
-	font-size: 22px;
-	text-shadow: 1px 1px 1px #000, 1px 1px 1px #FFF;
-	color: rgb(240, 240, 240);
-	line-height: 60px;
-	display: none;
-	font-weight: bold;
-}
+        #menu {
+            position: absolute;
+            font-size: 22px;
+            text-shadow: 1px 1px 1px #000, 1px 1px 1px #FFF;
+            color: rgb(240, 240, 240);
+            line-height: 60px;
+            display: none;
+            font-weight: bold;
+        }
 
-#next {
-	background: red;
-	cursor: pointer;
-	font-size: 20px;
-	line-height: 60px;
-	padding: 10px;
-	padding-left:40px;
-	padding-right:40px;
-	border-radius:5px;
-	font-weight: bold;
-	box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.4);
-	background-image: linear-gradient(to top, #77B2D3, #fff);
-	text-shadow: 1px 1px 1px #000, 1px 1px 1px #FFF;
-	color: #fff;
-	display: none;
-}
+        #next {
+            background: red;
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 60px;
+            padding: 10px;
+            padding-left: 40px;
+            padding-right: 40px;
+            border-radius: 5px;
+            font-weight: bold;
+            box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.4);
+            background-image: linear-gradient(to top, #77B2D3, #fff);
+            text-shadow: 1px 1px 1px #000, 1px 1px 1px #FFF;
+            color: #fff;
+            display: none;
+        }
 
-#next:HOVER {
-	background-image: linear-gradient(to top, red, #fff);
-}
-</style>
+        #next:HOVER {
+            background-image: linear-gradient(to top, red, #fff);
+        }
+    </style>
 </head>
 <body>
-    <div id="mainTab">
-    	<div id="title"></div>
-    </div>
-    <div id="menu">
-    	<span id="min">00</span>：<span id="mm">01</span><br>
-    	难 度： <span id="gk">简单</span><br>
-    	关 卡： <span id="type">A</span><br>
-    	步 数： <span id="num">0</span><br><br>
-    	<a id="next">下一关</a>
-    </div>
-	<img id="size">
+<div id="mainTab">
+    <div id="title"></div>
+</div>
+<div id="menu">
+    <span id="min">00</span>：<span id="mm">01</span><br>
+    难 度： <span id="gk">简单</span><br>
+    关 卡： <span id="type">A</span><br>
+    步 数： <span id="num">0</span><br><br>
+    <a id="next">下一关</a>
+</div>
+<img id="size">
 </body>
 <script type="text/javascript">
-	var $x = 3, $y = 3;
-	var $id = 0;
-	var $state = false;
-	var ids = new Array();
-	var tops = new Array();
-	var lefts = new Array();
-	var $time,$timer;
-	var temp = 0;
-	var $type = 0;
-	
-	$("#size").attr("src","images/320090.jpg");
-	
-	//加载游戏环境
-	$(window).load(function(){
-		doInit();
-	});
-	
-	function doInit(){
-		var x = $("#size").width();
-		var y = $("#size").height();
-		var width = $(window).width();
-		var height = $(window).height();
-		var w,h,url,ps,left,top,img;
-		$("#mainTab").css({"width":x,"height":y,"left":(width - x) / 2,"top":(height - y) / 2});
-		$("#menu").css({"height":y,"top":(height - y) / 2 - 10,"left":(width - x) / 2 + x + 20});
-		$("#mainTab").fadeIn();
-		
-		for (var z = 0; z < $y; z++) {
-			for (var i = 0; i < $x; i++) {
-				w = "width:" + (x / $x -2) + "px;";
-				h = "height:" + (y / $y -2) + "px;";
-				url = "background: url(\"images/320090.jpg\");";
-				ps = "background-position: -"+i*(x / $x)+"px -"+z*(y / $y)+"px;";
-				left = "left:" + (x / $x)*i + "px;";
-				top = "top:" + (y / $y)*z + "px;";
-				img = "<div id='"+$id+"' class='img' style='"+w+h+url+ps+left+top+"'></div>";
-				$("#mainTab").append(img);
-				$id++;
-			}
-		}
-		
-		$timer = setInterval(function(){
-			if(temp == $x*$y){
-				clearInterval($timer);
-				doStar();
-			}
-			var left = $(".img").eq(temp).css("left");
-			var top = $(".img").eq(temp).css("top");
-			$(".img").eq(temp).css({"top":"0px","left":"0px"}).fadeIn().animate({
-				top : top,
-				left : left
-			}, 150);
-			temp++;
-		}, 150);
-	}
-	
-	//开始游戏
-	function doStar(){
-		setTimeout('$("#title").html("游戏即将开始").hide().fadeIn();', 1000);
-		setTimeout('$("#title").html("Ready").hide().fadeIn();', 2000);
-		setTimeout('$("#title").html("Four").hide().fadeIn();', 3000);
-		setTimeout('$("#title").html("Three").hide().fadeIn();', 4000);
-		setTimeout('$("#title").html("Two").hide().fadeIn();', 5000);
-		setTimeout('$("#title").html("One").hide().fadeIn();', 6000);
-		setTimeout('$("#title").html("GO!").hide().fadeIn();', 7000);
-		setTimeout('$("#title").html("").fadeOut()', 8000);
-		setTimeout(function(){
-			$state = true;
-			$(".img").last().fadeOut();
-			$("#menu").fadeIn();
-			$time = setInterval(function(){
-				var mm = Number($("#mm").html()) + 1;
-				var min = Number($("#min").html());					
-				if(mm < 10){ mm = "0" + mm; }
-				if(mm == 60){
-					mm = "00";
-					min++;
-				}
-				if(min < 10){ min = "0" + min; }
-				$("#min").html(min);
-				$("#mm").html(mm);
-			}, 1000);
-			for (var i = 0; i < $(".img").length - 1; i++) {
-			  	var left = $(".img").eq(i).css("left");
-				var top = $(".img").eq(i).css("top");
-				ids.push(i);
-				lefts.push(left);
-				tops.push(top);
-			}
-			
-			//关键逻辑验证
-			do {
-				ids = Shuffle(ids);
-			} while (!solvability(ids,$x));
+    let $x = 3, $y = 3;
+    let $id = 0;
+    let $state = false;
+    let ids = [];
+    let tops = [];
+    let lefts = [];
+    let $time, $timer;
+    let temp = 0;
+    let $type = 0;
 
-			for (var i = 0; i < $(".img").length - 1; i++) {
-				$(".img").eq(ids[i]).animate({
-					top : tops[i],
-					left : lefts[i]
-				}, 350);
-			}
-		}, 8000);
-	}
-	
-	//移动拼图
-	$(document).on("click",".img",function(){
-		var x = $(this).css("width").replace("px","");
-		var h = $(this).css("height").replace("px","");
-		var a = $(this).css("left").replace("px","");
-		var b = $(this).css("top").replace("px","");
-		var c = $(".img").last().css("left").replace("px","");
-		var d = $(".img").last().css("top").replace("px","");
-		var e = Math.floor(Math.abs(d-b));
-		var f = Math.floor(Math.abs(a-c));
-		if((a == c && Math.floor(e-h) < 5) || (b == d && Math.floor(f-x) < 5)){
-			if($state){
-				$state = false;
-				$("#num").html(Number($("#num").html()) + 1);
-				$(".img").last().animate({
-					top : b,
-					left : a
-				}, 350);
-				$(this).animate({
-					top : d,
-					left : c
-				}, 350,function(){
-					$state = true;
-					if(doCheck()){
-						$(".img").last().fadeIn();
-						clearInterval($time);
-						$("#title").html("恭喜通关！").hide().fadeIn();
-						$("#next").fadeIn();
-						$state = false;
-					}
-				});
-			}
-		}
-	});
-	
-	//验证是否OK
-	function doCheck(){
-		for (var i = 0; i < $(".img").length - 1; i++) {
-			if($(".img").eq(i).css("left") != lefts[i]){
-				return false;
-			}
-			if($(".img").eq(i).css("top") != tops[i]){
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	//获取指定范围的随机数
-	function GetRandomNum(Min,Max){
-		var Range = Max - Min;
-		var Rand = Math.random();
-		return (Min + Math.round(Rand*Range));
-	}
-	
-	//数组乱序
-	function Shuffle(o){
-		for (var j,x,i = o.length;i;j = parseInt(Math.random()*i),x=o[--i],o[i] = o[j],o[j] = x); 
-		return o;	
-	}
-	
-	//判断一个打乱顺序的数字拼图是否可还原 
-	function solvability(order, size){
-		 var a;
-		 var count = 0;
-		 var m = 0;
-		 var n = 0;
-		 var len = order.length; 
-		 size = size || 3;
-		 for(var i=0; i<len; i++){ 
-			a = order[i]; 
-		 	if(a == size*size-1){
-		 		m = parseInt(i / size);
-		 		n = parseInt(i % size);
-		 	}
-		 	for(var j=i+1; j < len; j++){
-		 		if(order[j]<a){
-		 			count++;
-		 		}
-		 	}
-		 }
-		 count +=m;
-		 count +=n;
-		 return count%2 == 0;
-	}
-	
-	
-	//开始下一关
-	$("#next").click(function(){
-		$type++;
-		if($type == 1){
-			$("#gk").html("中等");	
-		} else if($type > 1){
-			$("#gk").html("困难");	
-		}
-		$("#type").html(String.fromCharCode($type + 65));
-		$("#menu,#next").hide();
-		$("#title").html("").hide();
-		clearInterval($time);
-		$("#min").html("00");
-		$("#mm").html("00");
-		$("#num").html("0");
-		$id = 0;
-		$(".img").remove();
-		$x++;
-		$y++;
-		$state = false;
-		ids = new Array();
-		tops = new Array();
-		lefts = new Array();
-		temp = 0;
-		doInit();
-	});
-		
-	//屏蔽右键菜单
-	document.oncontextmenu = function() {
-		return false;
-	};
+    $("#size").attr("src", "images/小犀牛.jpg");
 
-	//禁止浏览器拖拉
-	document.ondragstart = function() {
-		return false;
-	};
+    //加载游戏环境
+    $(window).load(function () {
+        doInit();
+    });
+
+    function doInit() {
+        let x = $("#size").width();
+        let y = $("#size").height();
+        let width = $(window).width();
+        let height = $(window).height();
+        let w, h, url, ps, left, top, img;
+        $("#mainTab").css({"width": x, "height": y, "left": (width - x) / 2, "top": (height - y) / 2});
+        $("#menu").css({"height": y, "top": (height - y) / 2 - 10, "left": (width - x) / 2 + x + 20});
+        $("#mainTab").fadeIn();
+
+        for (let z = 0; z < $y; z++) {
+            for (let i = 0; i < $x; i++) {
+                w = "width:" + (x / $x - 2) + "px;";
+                h = "height:" + (y / $y - 2) + "px;";
+                url = "background: url(\"images/小犀牛.jpg\");";
+                ps = "background-position: -" + i * (x / $x) + "px -" + z * (y / $y) + "px;";
+                left = "left:" + (x / $x) * i + "px;";
+                top = "top:" + (y / $y) * z + "px;";
+                img = "<div id='" + $id + "' class='img' style='" + w + h + url + ps + left + top + "'></div>";
+                $("#mainTab").append(img);
+                $id++;
+            }
+        }
+
+        $timer = setInterval(function () {
+            if (temp === $x * $y) {
+                clearInterval($timer);
+                doStar();
+            }
+            let left = $(".img").eq(temp).css("left");
+            let top = $(".img").eq(temp).css("top");
+            $(".img").eq(temp).css({"top": "0px", "left": "0px"}).fadeIn().animate({
+                top: top,
+                left: left
+            }, 150);
+            temp++;
+        }, 150);
+    }
+
+    //开始游戏
+    function doStar() {
+        setTimeout('$("#title").html("游戏即将开始").hide().fadeIn();', 1000);
+        setTimeout('$("#title").html("Ready").hide().fadeIn();', 2000);
+        setTimeout('$("#title").html("Four").hide().fadeIn();', 3000);
+        setTimeout('$("#title").html("Three").hide().fadeIn();', 4000);
+        setTimeout('$("#title").html("Two").hide().fadeIn();', 5000);
+        setTimeout('$("#title").html("One").hide().fadeIn();', 6000);
+        setTimeout('$("#title").html("GO!").hide().fadeIn();', 7000);
+        setTimeout('$("#title").html("").fadeOut()', 8000);
+        setTimeout(function () {
+            $state = true;
+            $(".img").last().fadeOut();
+            $("#menu").fadeIn();
+            $time = setInterval(function () {
+                let mm = Number($("#mm").html()) + 1;
+                let min = Number($("#min").html());
+                if (mm < 10) {
+                    mm = "0" + mm;
+                }
+                if (mm === 60) {
+                    mm = "00";
+                    min++;
+                }
+                if (min < 10) {
+                    min = "0" + min;
+                }
+                $("#min").html(min);
+                $("#mm").html(mm);
+            }, 1000);
+            for (let i = 0; i < $(".img").length - 1; i++) {
+                let left = $(".img").eq(i).css("left");
+                let top = $(".img").eq(i).css("top");
+                ids.push(i);
+                lefts.push(left);
+                tops.push(top);
+            }
+
+            //关键逻辑验证
+            do {
+                ids = Shuffle(ids);
+            } while (!solvability(ids, $x));
+
+            for (let i = 0; i < $(".img").length - 1; i++) {
+                $(".img").eq(ids[i]).animate({
+                    top: tops[i],
+                    left: lefts[i]
+                }, 350);
+            }
+        }, 8000);
+    }
+
+    //移动拼图
+    $(document).on("click", ".img", function () {
+        let x = $(this).css("width").replace("px", "");
+        let h = $(this).css("height").replace("px", "");
+        let a = $(this).css("left").replace("px", "");
+        let b = $(this).css("top").replace("px", "");
+        let c = $(".img").last().css("left").replace("px", "");
+        let d = $(".img").last().css("top").replace("px", "");
+        let e = Math.floor(Math.abs(d - b));
+        let f = Math.floor(Math.abs(a - c));
+        if ((a === c && Math.floor(e - h) < 5) || (b === d && Math.floor(f - x) < 5)) {
+            if ($state) {
+                $state = false;
+                $("#num").html(Number($("#num").html()) + 1);
+                $(".img").last().animate({
+                    top: b,
+                    left: a
+                }, 350);
+                $(this).animate({
+                    top: d,
+                    left: c
+                }, 350, function () {
+                    $state = true;
+                    if (doCheck()) {
+                        $(".img").last().fadeIn();
+                        clearInterval($time);
+                        $("#title").html("恭喜通关！").hide().fadeIn();
+                        $("#next").fadeIn();
+                        $state = false;
+                    }
+                });
+            }
+        }
+    });
+
+    //验证是否OK
+    function doCheck() {
+        for (let i = 0; i < $(".img").length - 1; i++) {
+            if ($(".img").eq(i).css("left") !== lefts[i]) {
+                return false;
+            }
+            if ($(".img").eq(i).css("top") !== tops[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //获取指定范围的随机数
+    function GetRandomNum(Min, Max) {
+        let Range = Max - Min;
+        let Rand = Math.random();
+        return (Min + Math.round(Rand * Range));
+    }
+
+    //数组乱序
+    function Shuffle(o) {
+        for (let j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x) ;
+        return o;
+    }
+
+    //判断一个打乱顺序的数字拼图是否可还原
+    function solvability(order, size) {
+        let a;
+        let count = 0;
+        let m = 0;
+        let n = 0;
+        let len = order.length;
+        size = size || 3;
+        for (let i = 0; i < len; i++) {
+            a = order[i];
+            if (a === size * size - 1) {
+                m = parseInt(i / size);
+                n = parseInt(i % size);
+            }
+            for (let j = i + 1; j < len; j++) {
+                if (order[j] < a) {
+                    count++;
+                }
+            }
+        }
+        count += m;
+        count += n;
+        return count % 2 === 0;
+    }
+
+
+    //开始下一关
+    $("#next").click(function () {
+        $type++;
+        if ($type === 1) {
+            $("#gk").html("中等");
+        } else if ($type > 1) {
+            $("#gk").html("困难");
+        }
+        $("#type").html(String.fromCharCode($type + 65));
+        $("#menu,#next").hide();
+        $("#title").html("").hide();
+        clearInterval($time);
+        $("#min").html("00");
+        $("#mm").html("00");
+        $("#num").html("0");
+        $id = 0;
+        $(".img").remove();
+        $x++;
+        $y++;
+        $state = false;
+        ids = [];
+        tops = [];
+        lefts = [];
+        temp = 0;
+        doInit();
+    });
+
+    //屏蔽右键菜单
+    document.oncontextmenu = function () {
+        return false;
+    };
+
+    //禁止浏览器拖拉
+    document.ondragstart = function () {
+        return false;
+    };
 </script>
 </html>
