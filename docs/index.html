@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link type="image/x-icon" href="images/2.png" rel="icon">
+    <link type="image/x-icon" href="image/2.png" rel="icon">
     <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
     <title>欢乐拼图</title>
     <style type="text/css">
@@ -10,7 +10,7 @@
             margin: 0px;
             padding: 0px;
             font-family: 微软雅黑;
-            background: url("images/3.png");
+            background: url("image/3.png");
         }
 
         #mainTab {
@@ -108,7 +108,7 @@
     let temp = 0;
     let $type = 0;
 
-    $("#size").attr("src", "images/小犀牛.jpg");
+    $("#size").attr("src", "image/puzzle.jpg");
 
     //加载游戏环境
     $(window).load(function () {
@@ -129,7 +129,7 @@
             for (let i = 0; i < $x; i++) {
                 w = "width:" + (x / $x - 2) + "px;";
                 h = "height:" + (y / $y - 2) + "px;";
-                url = "background: url(\"images/小犀牛.jpg\");";
+                url = "background: url(\"image/puzzle.jpg\");";
                 ps = "background-position: -" + i * (x / $x) + "px -" + z * (y / $y) + "px;";
                 left = "left:" + (x / $x) * i + "px;";
                 top = "top:" + (y / $y) * z + "px;";
@@ -158,12 +158,11 @@
     function doStar() {
         setTimeout('$("#title").html("游戏即将开始").hide().fadeIn();', 1000);
         setTimeout('$("#title").html("Ready").hide().fadeIn();', 2000);
-        setTimeout('$("#title").html("Four").hide().fadeIn();', 3000);
-        setTimeout('$("#title").html("Three").hide().fadeIn();', 4000);
-        setTimeout('$("#title").html("Two").hide().fadeIn();', 5000);
-        setTimeout('$("#title").html("One").hide().fadeIn();', 6000);
-        setTimeout('$("#title").html("GO!").hide().fadeIn();', 7000);
-        setTimeout('$("#title").html("").fadeOut()', 8000);
+        setTimeout('$("#title").html("Three").hide().fadeIn();', 3000);
+        setTimeout('$("#title").html("Two").hide().fadeIn();', 4000);
+        setTimeout('$("#title").html("One").hide().fadeIn();', 5000);
+        setTimeout('$("#title").html("GO!").hide().fadeIn();', 6000);
+        setTimeout('$("#title").html("").fadeOut()', 7000);
         setTimeout(function () {
             $state = true;
             $(".img").last().fadeOut();
