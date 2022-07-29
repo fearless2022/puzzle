@@ -4,12 +4,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link type="image/x-icon" href="image/2.png" rel="icon">
     <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
-    <title>欢乐拼图</title>
+    <title>puzzle</title>
     <style type="text/css">
         body {
-            margin: 0px;
-            padding: 0px;
-            font-family: 微软雅黑;
+            margin: 0;
+            padding: 0;
+            font-family: "Times New Roman", serif;
             background: url("image/3.png");
         }
 
@@ -28,7 +28,7 @@
             top: 38%;
             font-size: 70px;
             font-weight: bold;
-            text-shadow: 0 8px 9px #37879B, 0px -2px 2px #77B2D3;
+            text-shadow: 0 8px 9px #37879B, 0 -2px 2px #77B2D3;
             color: #fff;
         }
 
@@ -51,6 +51,8 @@
             line-height: 60px;
             display: none;
             font-weight: bold;
+            width: 100%;
+            text-align: center;
         }
 
         #next {
@@ -77,7 +79,7 @@
     <!-- 百度统计 -->
     <script>
         var _hmt = _hmt || [];
-        (function() {
+        (function () {
             var hm = document.createElement("script");
             hm.src = "https://hm.baidu.com/hm.js?050abda50e42764cf28236dcf76f4c5d";
             var s = document.getElementsByTagName("script")[0];
@@ -87,16 +89,16 @@
 </head>
 <body>
 <div id="mainTab">
-    <div id="title"></div>
+    <div id="title">puzzle</div>
 </div>
 <div id="menu">
-    <span id="min">00</span>：<span id="mm">01</span><br>
-    难 度： <span id="gk">简单</span><br>
-    关 卡： <span id="type">A</span><br>
-    步 数： <span id="num">0</span><br><br>
+    计时:<span id="min">00</span>:<span id="mm">01</span>&nbsp;&nbsp;
+    难度:<span id="gk">简单</span>&nbsp;&nbsp;
+    关卡:<span id="type">A</span>&nbsp;&nbsp;
+    步数:<span id="num">0</span><br/>
     <a id="next">下一关</a>
 </div>
-<img id="size">
+<img id="size" width="100%">
 </body>
 <script type="text/javascript">
     let $x = 3, $y = 3;
@@ -123,7 +125,7 @@
         let height = $(window).height();
         let w, h, url, ps, left, top, img;
         $("#mainTab").css({"width": x, "height": y, "left": (width - x) / 2, "top": (height - y) / 2});
-        $("#menu").css({"height": y, "top": (height - y) / 2 - 10, "left": (width - x) / 2 + x + 20});
+        $("#menu").css({"height": y, "top": (height - y) / 2 + y + 10});
         $("#mainTab").fadeIn();
 
         for (let z = 0; z < $y; z++) {
@@ -291,7 +293,6 @@
         count += n;
         return count % 2 === 0;
     }
-
 
     //开始下一关
     $("#next").click(function () {
