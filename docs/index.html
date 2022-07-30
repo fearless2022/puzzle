@@ -133,6 +133,7 @@
     });
 
     function doInit() {
+        let src = $("#size").attr("src");
         let x = $("#size").width();
         let y = $("#size").height();
         let width = $(window).width();
@@ -153,7 +154,7 @@
             for (let i = 0; i < $x; i++) {
                 w = "width:" + (x / $x - 2) + "px;";
                 h = "height:" + (y / $y - 2) + "px;";
-                url = "background: url(\"image/puzzle.jpg\");";
+                url = "background: url(" + src + ");";
                 ps = "background-position: -" + i * (x / $x) + "px -" + z * (y / $y) + "px;";
                 left = "left:" + (x / $x) * i + "px;";
                 top = "top:" + (y / $y) * z + "px;";
