@@ -15,12 +15,11 @@
         }
 
         #mainTab {
-            position: absolute;
             display: none;
             background: #fff;
             box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.4);
             width: 100%;
-            height: 100%;
+            margin: 0;
         }
 
         #title {
@@ -28,7 +27,7 @@
             z-index: 100;
             width: 100%;
             text-align: center;
-            top: 38%;
+            top: 50%;
             font-size: 70px;
             font-weight: bold;
             text-shadow: 0 8px 9px #37879B, 0 -2px 2px #77B2D3;
@@ -49,11 +48,9 @@
 
         #image {
             width: 100%;
-            height: 100%;
         }
 
         #menu {
-            position: absolute;
             font-size: 22px;
             text-shadow: 1px 1px 1px #000, 1px 1px 1px #FFF;
             color: rgb(240, 240, 240);
@@ -88,7 +85,7 @@
     <!-- 百度统计 -->
     <script>
         var _hmt = _hmt || [];
-        (function() {
+        (function () {
             var hm = document.createElement("script");
             hm.src = "https://hm.baidu.com/hm.js?050abda50e42764cf28236dcf76f4c5d";
             var s = document.getElementsByTagName("script")[0];
@@ -109,7 +106,7 @@
     计时:<span id="min">00</span>:<span id="mm">01</span>&nbsp;&nbsp;
     难度:<span id="gk">简单</span>&nbsp;&nbsp;
     关卡:<span id="type">A</span>&nbsp;&nbsp;
-    步数:<span id="num">0</span><br />
+    步数:<span id="num">0</span><br/>
     <a id="next">下一关</a>
 </div>
 </body>
@@ -124,11 +121,17 @@
     let $time, $timer;
     let temp = 0;
     let $type = 0;
+    let width = $(window).width();
+    let height = $(window).height();
 
-    $("#size").attr("src", "image/puzzle.jpg");
+    if (width > 1024) {
+        $("#size").attr("src", "image/puzzle-pc.jpg");
+    } else {
+        $("#size").attr("src", "image/puzzle-phone.jpg");
+    }
 
     //加载游戏环境
-    $(window).load(function() {
+    $(window).load(function () {
         doInit();
     });
 
@@ -136,8 +139,6 @@
         let src = $("#size").attr("src");
         let x = $("#size").width();
         let y = $("#size").height();
-        let width = $(window).width();
-        let height = $(window).height();
         let w, h, url, ps, left, top, img;
         $("#mainTab").css({
             "width": x,
@@ -164,7 +165,7 @@
             }
         }
 
-        $timer = setInterval(function() {
+        $timer = setInterval(function () {
             if (temp === $x * $y) {
                 clearInterval($timer);
                 doStar();
@@ -191,11 +192,11 @@
         setTimeout('$("#title").html("One").hide().fadeIn();', 5000);
         setTimeout('$("#title").html("Go!").hide().fadeIn();', 6000);
         setTimeout('$("#title").html("").fadeOut()', 7000);
-        setTimeout(function() {
+        setTimeout(function () {
             $state = true;
             $(".img").last().fadeOut();
             $("#menu").fadeIn();
-            $time = setInterval(function() {
+            $time = setInterval(function () {
                 let mm = Number($("#mm").html()) + 1;
                 let min = Number($("#min").html());
                 if (mm < 10) {
@@ -234,7 +235,7 @@
     }
 
     //移动拼图
-    $(document).on("click", ".img", function() {
+    $(document).on("click", ".img", function () {
         let x = $(this).css("width").replace("px", "");
         let h = $(this).css("height").replace("px", "");
         let a = $(this).css("left").replace("px", "");
@@ -254,7 +255,7 @@
                 $(this).animate({
                     top: d,
                     left: c
-                }, 350, function() {
+                }, 350, function () {
                     $state = true;
                     if (doCheck()) {
                         $(".img").last().fadeIn();
@@ -290,7 +291,7 @@
 
     //数组乱序
     function shuffle(o) {
-        for (let j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+        for (let j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x) ;
         return o;
     }
 
@@ -320,7 +321,7 @@
     }
 
     //开始下一关
-    $("#next").click(function() {
+    $("#next").click(function () {
         $type++;
         if ($type === 1) {
             $("#gk").html("中等");
@@ -347,12 +348,12 @@
     });
 
     //屏蔽右键菜单
-    document.oncontextmenu = function() {
+    document.oncontextmenu = function () {
         return false;
     };
 
     //禁止浏览器拖拉
-    document.ondragstart = function() {
+    document.ondragstart = function () {
         return false;
     };
 </script>
