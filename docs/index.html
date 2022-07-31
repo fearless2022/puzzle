@@ -123,10 +123,9 @@
     let $time, $timer;
     let temp = 0;
     let $type = 0;
-    let width = $(window).width();
-    let height = $(window).height();
+    let window_width = $(window).width();
 
-    if (width > 1024) {
+    if (window_width > 1024) {
         $("#size").attr("src", "image/puzzle-pc.jpg");
     } else {
         $("#size").attr("src", "image/puzzle-phone.jpg");
@@ -138,6 +137,8 @@
     });
 
     function doInit() {
+        let width = $(window).width();
+        let height = $(window).height();
         let src = $("#size").attr("src");
         let x = $("#size").width();
         let y = $("#size").height();
