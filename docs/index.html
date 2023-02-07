@@ -111,6 +111,24 @@
     步数:<span id="num">0</span><br/>
     <a id="next">下一关</a>
 </div>
+<!-- 是你 -->
+<audio id="bgmusic" src="http://music.163.com/song/media/outer/url?id=1966162185.mp3" autoplay="autoplay" loop="loop" style="display: block; width: 3%; height:3%;"></audio>
+<!-- 给你一瓶魔法药水 -->
+<!--<audio id="bgmusic" src="http://music.163.com/song/media/outer/url?id=1959667345.mp3" autoplay="autoplay" loop="loop" style="display: block; width: 3%; height:3%;"></audio>-->
+<!-- 星辰大海 -->
+<!--<audio id="bgmusic" src="http://music.163.com/song/media/outer/url?id=1851244378.mp3" autoplay="autoplay" loop="loop" style="display: block; width: 3%; height:3%;"></audio>-->
+<script type="text/javascript">
+    function toggleSound() {
+        var music = document.getElementById("bgmusic");// 获取ID
+        console.log(music);
+        console.log(music.paused);
+        if (music.paused) { // 判断是否播放
+            music.paused=false;
+            music.play(); // 没有就播放
+        }
+    }
+    setInterval("toggleSound()",1);
+</script>
 </body>
 <script type="text/javascript">
     let $x = 3;
@@ -359,23 +377,5 @@
     document.ondragstart = function () {
         return false;
     };
-</script>
-<!-- 是你 -->
-<audio id="bgmusic" src="http://music.163.com/song/media/outer/url?id=1966162185.mp3" autoplay="autoplay" loop="loop" style="display: block; width: 3%; height:3%;"></audio>
-<!-- 给你一瓶魔法药水 -->
-<!--<audio id="bgmusic" src="http://music.163.com/song/media/outer/url?id=1959667345.mp3" autoplay="autoplay" loop="loop" style="display: block; width: 3%; height:3%;"></audio>-->
-<!-- 星辰大海 -->
-<!--<audio id="bgmusic" src="http://music.163.com/song/media/outer/url?id=1851244378.mp3" autoplay="autoplay" loop="loop" style="display: block; width: 3%; height:3%;"></audio>-->
-<script type="text/javascript">
-    function toggleSound() {
-        var music = document.getElementById("bgmusic");// 获取ID
-        console.log(music);
-        console.log(music.paused);
-        if (music.paused) { // 判断是否播放
-            music.paused=false;
-            music.play(); // 没有就播放
-        }
-    }
-    setInterval("toggleSound()",1);
 </script>
 </html>
